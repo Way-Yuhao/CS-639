@@ -1,0 +1,30 @@
+[backwardWarpImg]
+
+Compute the mask by evaluating if backwarping traces back to the valid region of the unwarpped image.
+Sample values by interpolation
+
+
+[RANSAC]
+
+given iteration limit and allowed error margin
+for each run:
+	randomly generate 4 source and destination point pairs
+	computer Homography Matrix based those 4 points
+	Apply Homography Matrix too all source points, count number of points transformed to a neighborhood within the true destination points within the error margin (L2 norm)
+EndFor
+return the H matrix with the highest amount of valid points
+
+
+[blendImagePair]
+
+computes weighted mask using bwdist() for both source and destination image
+computes the output image using (Ws * Is + Wd + Id) (Ws + Wd) for every pixel location 
+
+
+[stichedImg]
+For input image (excluding reference img):
+	run RANSAC to compute H
+	apply backwarping to image to align with reference plane
+	blend image with stitched image
+	update mask for stitched image
+EndFor

@@ -1,0 +1,30 @@
+[Edge Detection]
+We use MATLAB built-in edge() function to find edges on a given grayscale image
+
+
+[Hough Transform]
+Given theta_num_bins and and rho_num_bins, we initialize accumulator array of size(rho_num_bins, theta_num_bins). we acquire theta, rho from equation x * sin(theta) - y * cos(theta) + rho = 0.
+We iterate over all indices of theta, and translate theta and rho from their indices via:
+	theta = theta_idx / theta_num_bins * pi;
+    rho = round(-(x * sin(theta)) + y * cos(theta), 0);
+We find the corresponding position of (rho_idx, theta_idx), increment its value by 1
+
+
+[Find Peaks]
+We set find the boundaries of (x, y) via the size of the orig_img
+We iterate over all pixels of the hough_img:
+	if the value at this pixel > threshold:
+		translate from rho_idx, theta_idx to rho, theta
+		Using EQ x * sin(theta) - y * cos(theta) + rho = 0, we find the line equation in image space
+		we find the intersection points of the line equation and the 4 boundaries of the image. Now we have two (x, y) locations
+For each pair of (x, y) location, draw a line on the original image
+
+
+[Line Segments]
+To find the correct end points of the lines from [Find Peaks], we read in the edge image
+We initially set cropped_line_img as the same as line_img
+For each pixel location (x, y) in the cropped_line_img:
+	if edge_img(x, y) is true:
+		we leave cropped_line_img(x, y) unchanged. ie we keep the annotation
+	else:
+		we set cropped_line_img(x, y) to the pixel value from the orig_img. ie we remove the annotation

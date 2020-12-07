@@ -1,0 +1,20 @@
+README
+
+[compute flow]
+
+At each grid location:
+	extract template
+	extract search area
+	compute correlation between template and search area at each location 
+	express peak as offset from template location
+
+
+[tracking tester]
+
+compute histrogram of object
+In each following frame
+	extract search area
+	extract candidate windows from search area
+	compute histogram for each candidate window
+	select the candidate histogram with min MSE from the object histogram
+	update object locatiopn

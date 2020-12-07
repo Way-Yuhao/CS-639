@@ -1,0 +1,13 @@
+[loadFocalStack]
+
+loads all images in a given folder in the order that corresponds to their filenames
+
+
+[generateIndexMap]
+
+given the Laplacian method, we find the argmax of the SML matrix along axis 3. We then use an average filter to remove noise
+
+
+[refocusApp]
+
+we get coordinates from user input, find best focus frame from the depth_map, and then refocus to that frame. 
